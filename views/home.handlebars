@@ -1,4 +1,4 @@
-<h1>Welcome to my Job App</h1>
+<h1 class="text-center">Welcome to my Job App</h1>
 
 <figure class="text-center">
   <blockquote class="blockquote">
@@ -11,7 +11,7 @@
 
 <div class="card">
   <div class="card-body">
-    <h2>Do you need someone to do something for you? Or maybe you want to work for someone.</h2>
+    <h2 class="text-center">Do you need someone to do something for you? Or maybe you want to work for someone.</h2>
 
     <p class="lead text-center mt-4">Just register at this website and start it</p>
 
@@ -20,3 +20,14 @@
     </button>
   </div>
 </div>
+
+{{#each users}}
+  <p>Id: {{_id}}</p>
+  <p>Name: {{name}}</p>
+  <p>E-mail: {{email}}</p>
+  <p>Password: {{password}}</p>
+
+  <a href="/users/delete/{{_id}}"><button class="btn btn-outline-danger">Delete</button></a>
+
+  <hr>
+{{/each}}
