@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const router = require("./routes/router");
 const users = require("./routes/users");
+const passport = require("passport");
+require("./config/auth")(passport);
 
 //-----Config
 // Middleware
@@ -17,11 +19,16 @@ app.use(session({
   saveUninitialized: true
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(flash())
 
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
   next();
 })
 
@@ -40,7 +47,8 @@ app.use(bodyParser.json());
 mongoose.connect("mongodb://localhost/jobapp", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-
+  useFindAndModify: false,
+  useCreateIndex: true
 }).then(() => {
   console.log("Connected to the MongoDB");
 }).catch((err) => {

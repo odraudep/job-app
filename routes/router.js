@@ -11,4 +11,11 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/logout", (req, res) => {
+  req.logOut();
+
+  req.flash("success_msg", "You have logged out of your account");
+  res.redirect("/");
+});
+
 module.exports = router;

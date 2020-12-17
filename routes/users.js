@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 require("../models/User");
 const User = mongoose.model("users");
 const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 router.get("/register", (req, res) => {
   res.render("register");
@@ -58,10 +59,13 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.post("/login", (req, res) => {
-  req.flash("success_msg", "You have been logged")
-  res.redirect("/");
-})
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/login",
+    failureFlash: true
+  })(req, res, next);
+});
 
 router.get("/delete/:id", (req, res) => {
   User.findOneAndDelete({_id: req.params.id}).then(() => {
