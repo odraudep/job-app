@@ -11,8 +11,8 @@ const bodyParser = require("body-parser");
 app.use(session({
   secret: "jobapp",
   resave: true,
-  saveUninitialized: true
-  // cookie: {secure: true}
+  saveUninitialized: true,
+  cookie: {secure: true}
 }));
 app.use(flash())
 
