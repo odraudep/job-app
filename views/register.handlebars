@@ -1,0 +1,25 @@
+{{#each errors}}
+  <div class="alert alert-danger">{{err_inf}}</div>
+{{/each}}
+
+<div class="card">
+  <div class="card-body">
+    <h3>Register: </h3>
+
+    <form action="/users/register" method="POST" novalidate>
+      <label for="name">Name: </label>
+      <input type="text" name="name" id="name" class="form-control" value="{{name}}">
+
+      <label for="email" class="mt-2">E-mail: </label>
+      <input type="email" name="email" id="email" class="form-control" value="{{email}}">
+
+      <label for="password" class="mt-2">Password: </label>
+      <input type="password" name="password" id="password" class="form-control" value="{{password}}">
+
+      <label for="password2" class="mt-2">Repeat your password: </label>
+      <input type="password" name="password2" id="password2" class="form-control">
+
+      <button type="submit" class="btn btn-success mt-4">Sign Up</button>
+    </form>
+  </div>
+</div>
