@@ -1,0 +1,11 @@
+{{#each users}}
+  <p>Id: {{_id}}</p>
+  <p>Name: {{name}}</p>
+  <p>E-mail: {{email}}</p>
+  <p>IsAdm: {{isAdm}}</p>
+  <p style="word-wrap: break-word;">Password: {{password}}</p>
+
+  <a href="/users/delete/{{_id}}"><button class="btn btn-outline-danger">Delete</button></a>
+
+  <hr>
+{{/each}}

@@ -13,21 +13,16 @@
   <div class="card-body">
     <h2 class="text-center">Do you need someone to do something for you? Or maybe you want to work for someone.</h2>
 
-    <p class="lead text-center mt-4">Just register at this website and start it</p>
+    {{#if user}}
+      <p class="lead text-center mt-4">Hello, {{cuser.name}}!</p>
+    {{else}}
+      <p class="lead text-center mt-4">Just register at this website and start</p>
 
-    <button type="button" class="btn btn-danger btn-lg" style="display: block; margin: auto;">
-      Register Now
-    </button>
+      <a href="/users/register" style="text-decoration: none;">
+        <button type="button" class="btn btn-danger btn-lg" style="display: block; margin: auto;">
+          Register Now
+        </button>
+      </a>
+    {{/if}}
   </div>
 </div>
-
-{{#each users}}
-  <p>Id: {{_id}}</p>
-  <p>Name: {{name}}</p>
-  <p>E-mail: {{email}}</p>
-  <p style="word-wrap: break-word;">Password: {{password}}</p>
-
-  <a href="/users/delete/{{_id}}"><button class="btn btn-outline-danger">Delete</button></a>
-
-  <hr>
-{{/each}}

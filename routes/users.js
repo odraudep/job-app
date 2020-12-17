@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("users/register");
 });
 
 router.post("/register", (req, res) => {
@@ -45,7 +45,7 @@ router.post("/register", (req, res) => {
   console.log(errors)
   // Check the errors
   if (errors.length > 0) {
-    res.render("register", {errors: errors, name: name, email: email, password: password});
+    res.render("users/register", {errors: errors, name: name, email: email, password: password});
   } else {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
@@ -65,7 +65,7 @@ router.post("/register", (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("users/login");
 });
 
 router.post("/login", (req, res, next) => {

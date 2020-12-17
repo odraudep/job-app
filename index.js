@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const router = require("./routes/router");
 const users = require("./routes/users");
+const admin = require("./routes/admin");
 const passport = require("passport");
 require("./config/auth")(passport);
 
@@ -16,7 +17,8 @@ require("./config/auth")(passport);
 app.use(session({
   secret: "jobapp",
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { maxAge: 2 * 60 * 1000 }
 }));
 
 app.use(passport.initialize());
@@ -58,6 +60,7 @@ mongoose.connect("mongodb://localhost/jobapp", {
 //-----Routes
 app.use(router)
 app.use("/users", users);
+app.use("/admin", admin);
 
 app.use((req, res, next) => {
   res.status(404).sendFile(__dirname + "/html/404.html");
