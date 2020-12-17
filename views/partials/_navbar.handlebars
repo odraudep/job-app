@@ -20,8 +20,12 @@
       </ul>
 
       <div class="d-flex">
-        <a href="/users/login"><button class="btn btn-outline-primary">Sign In</button></a>
-        <a href="/users/register"><button class="btn btn-primary ms-4">Sign Up</button></a>
+        {{#if user}}
+          {{!-- <small>{{user}}</small> --}}
+        {{else}}
+          <a href="/users/login"><button class="btn btn-outline-primary">Sign In</button></a>
+          <a href="/users/register"><button class="btn btn-primary ms-4">Sign Up</button></a>
+        {{/if}}
       </div>
     </div>
   </div>

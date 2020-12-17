@@ -20,20 +20,29 @@ router.post("/register", (req, res) => {
   // Errors
   if (!name) {
     errors.push({err_inf: "Type a name"});
-  }
+  };
   if (!email) {
-    errors.push({err_inf: "Type a email"});
-  }
+    errors.push({err_inf: "Type an email"});
+  };
+  User.findOne({email: email}).then((user) => {
+    if (user) {
+      errors.push({err_inf: "Already exists an account using this email"});
+    }
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/");
+  });
   if (!password) {
     errors.push({err_inf: "Type a password"});
-  }
+  };
   if (!password2) {
     errors.push({err_inf: "Repeat your password"});
-  }
+  };
   if(password && password2 && password != password2) {
     errors.push({err_inf: "The passwords have to be the same"});
-  }
+  };
 
+  console.log(errors)
   // Check the errors
   if (errors.length > 0) {
     res.render("register", {errors: errors, name: name, email: email, password: password});
