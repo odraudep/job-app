@@ -17,8 +17,7 @@ require("./config/auth")(passport);
 app.use(session({
   secret: "jobapp",
   resave: true,
-  saveUninitialized: true,
-  cookie: { maxAge: 2 * 60 * 1000 }
+  saveUninitialized: true
 }));
 
 app.use(passport.initialize());

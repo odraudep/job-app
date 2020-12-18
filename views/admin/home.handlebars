@@ -5,7 +5,11 @@
   <p>IsAdm: {{isAdm}}</p>
   <p style="word-wrap: break-word;">Password: {{password}}</p>
 
-  <a href="/users/delete/{{_id}}"><button class="btn btn-outline-danger">Delete</button></a>
+  <form action="/admin/users/delete/{{_id}}" method="POST">
+    <a href="/admin/users/delete/{{_id}}">
+      <button class="btn btn-outline-danger">Delete</button>
+    </a>
+  </form>
 
   <hr>
 {{/each}}

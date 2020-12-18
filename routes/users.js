@@ -76,14 +76,4 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/delete/:id", (req, res) => {
-  User.findOneAndDelete({_id: req.params.id}).then(() => {
-    req.flash("success_msg", "Deleted");
-    res.redirect("/");
-  }).catch((err) => {
-    req.flash("error_msg", "Error");
-    res.redirect("/");
-  });
-});
-
 module.exports = router;
