@@ -2,7 +2,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 require("../models/User");
 const User = mongoose.model("users");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
 router.get("/register", (req, res) => {
@@ -122,8 +122,8 @@ router.post("/profile/update", (req, res) => {
 });
 
 router.get("/profile/changep/:id", (req, res) => {
-  User.findOne({_id: req.params.id}).then((user) => {
-    res.render("users/changepas");
+  User.findOne({_id: req.params.id}).lean().then((user) => {
+    res.render("users/changepas", {user: user});
   }).catch((err) => {
     req.flash("error_msg", "That's an error");
     res.redirect("/users/profile");
@@ -131,49 +131,53 @@ router.get("/profile/changep/:id", (req, res) => {
 });
 
 router.post("/profile/changep/", (req, res) => {
-  const password = req.body.password;
-  const new_password = req.body.new_password;
-  const rep_password = req.body.rep_password;
+  let password = req.body.password;
+  let new_password = req.body.new_password;
+  let rep_password = req.body.rep_password;
 
   let errors = [];
 
-  // Errors
-  // if (!password) {
-  //   errors.push({err_inf: "Type your password"});
-  // };
-  // if (!new_password) {
-  //   errors.push({err_inf: "Type a new password"});
-  // };
-  // if (!rep_password) {
-  //   errors.push({err_inf: "Repeat your password"});
-  // };
-  // if(new_password && rep_password && new_password != rep_password) {
-  //   errors.push({err_inf: "The passwords have to be the same"});
-  // };
+  if (!password) {
+    errors.push({err_inf: "Type your password"});
+  };
+  if (!new_password) {
+    errors.push({err_inf: "Type a new password"});
+  };
+  if (!rep_password) {
+    errors.push({err_inf: "Repeat your password"});
+  };
+  if(new_password && rep_password && new_password != rep_password) {
+    errors.push({err_inf: "The passwords have to be the same"});
+  };
 
   // Check the errors
   if (errors.length > 0) {
-    res.render("users/changepas", {errors: errors});
+    User.findOne({_id: req.body.id}).lean().then((user) => {
+      res.render("users/changepas", {errors: errors, user: user});
+    }).catch((err) => {
+      req.flash("error_msg", "That's an error");
+      res.redirect("/users/profile");
+    });
   } else {
-    // const salt = bcrypt.genSaltSync(10);
-    // const hash = bcrypt.hashSync(new_password, salt);
-
     User.findOne({_id: req.body.id}).then((user) => {
-      bcrypt.compare(new_password, user.password, (err, ok) => {
-        if (err) {
-          req.flash("error_msg", "Password incorrect");
-          res.redirect("/users/profile");
-        } else {
-          user.password = new_password;
+      bcrypt.compare(password, user.password, (err, ok) => {
+        if (ok) {
+          const salt = bcrypt.genSaltSync(10);
+          const hash = bcrypt.hashSync(new_password, salt);
+
+          user.password = hash;
 
           user.save().then(() => {
-            req.flash("success_msg", "Password has been changed");
             req.logOut();
+            req.flash("success_msg", "Password has been changed");
             res.redirect("/users/login");
           }).catch((err) => {
             req.flash("error_msg", "That's an error to save the alterations");
             res.redirect("/users/profile");
           });
+        } else {
+          req.flash("error_msg", "Password incorrect");
+          res.redirect("/users/profile");
         };
       });
     }).catch((err) => {

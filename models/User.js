@@ -25,7 +25,7 @@ const User = new Schema({
   },
   // Secundary
   birth: {
-    type: Date
+    type: String
   },
   contact: {
     type: String
