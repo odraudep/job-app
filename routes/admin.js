@@ -13,12 +13,49 @@ router.get("/", isAdmin, (req, res) => {
   });
 });
 
-router.get("/users/delete/:id", (req, res) => {
+router.post("/user/delete/:id", (req, res) => {
   User.findOneAndDelete({_id: req.params.id}).then(() => {
     req.flash("success_msg", "Deleted");
     res.redirect("/admin");
   }).catch((err) => {
     req.flash("error_msg", "Error");
+    res.redirect("/admin");
+  });
+});
+
+router.get("/user/admin/:id", (req, res) => {
+  User.findOne({_id: req.params.id}).then((user) => {
+    user.isAdm = 1;
+
+    user.save().then(() => {
+      req.flash("success_msg", "Alterations has been saved");
+      res.redirect("/admin");
+    }).catch((err) => {
+      req.flash("error_msg", "That's an error to save the alterations");
+      res.redirect("/admin");
+    });
+
+    req.flash("success_msg", "Updated");
+    res.redirect("/admin");
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/admin");
+  });
+});
+
+router.get("/user/noadmin/:id", (req, res) => {
+  User.findOne({_id: req.params.id}).then((user) => {
+    user.isAdm = 0;
+
+    user.save().then(() => {
+      req.flash("success_msg", "Alterations has been saved");
+      res.redirect("/admin");
+    }).catch((err) => {
+      req.flash("error_msg", "That's an error to save the alterations");
+      res.redirect("/admin");
+    });
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
     res.redirect("/admin");
   });
 });

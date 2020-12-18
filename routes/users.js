@@ -42,7 +42,6 @@ router.post("/register", (req, res) => {
     errors.push({err_inf: "The passwords have to be the same"});
   };
 
-  console.log(errors)
   // Check the errors
   if (errors.length > 0) {
     res.render("users/register", {errors: errors, name: name, email: email, password: password});

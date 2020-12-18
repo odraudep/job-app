@@ -3,9 +3,16 @@
   <p>Name: {{name}}</p>
   <p>E-mail: {{email}}</p>
   <p>IsAdm: {{isAdm}}</p>
+  <a href="/admin/user/admin/{{_id}}">
+    <button class="btn btn-outline-success">Admin</button>
+  </a>
+  <a href="/admin/user/noadmin/{{_id}}">
+    <button class="btn btn-outline-warning">No-Admin</button>
+  </a>
+
   <p style="word-wrap: break-word;">Password: {{password}}</p>
 
-  <form action="/admin/users/delete/{{_id}}" method="POST">
+  <form action="/admin/user/delete/{{_id}}" method="POST">
     <a href="/admin/users/delete/{{_id}}">
       <button class="btn btn-outline-danger">Delete</button>
     </a>

@@ -13,7 +13,7 @@ const User = new Schema({
   },
   isAdm: {
     type: String,
-    default: 1
+    default: 0
   },
   date: {
     type: Date,
