@@ -1,0 +1,24 @@
+{{#each errors}}
+  <div class="alert alert-danger">{{err_inf}}</div>
+{{/each}}
+
+<div class="card">
+  <div class="card-body">
+    <h3>Change Password: </h3>
+
+    <form action="/users/profile/changep" method="POST">
+      <input type="hidden" name="id" value="{{user._id}}">
+
+      <label for="pasword">Actual password: </label>
+      <input type="password" name="pasword" id="pasword" class="form-control" placeholder="Actual password...">
+
+      <label for="new-pasword" class="mt-2">New password: </label>
+      <input type="password" name="new-password" id="new-password" class="form-control" placeholder="New password...">
+
+      <label for="rep_pasword" class="mt-2">Repeat password: </label>
+      <input type="password" name="rep_password" id="rep_password" class="form-control" placeholder="Repeat password...">
+
+      <button type="submit" class="btn btn-success mt-4">Change</button>
+    </form>
+  </div>
+</div>

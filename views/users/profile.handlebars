@@ -4,8 +4,34 @@
   <div class="card-body">
     <p>Name: {{user.name}}</p>
     <p>E-mail: {{user.email}}</p>
+    <p>Adm: {{user.isAdm}}</p>
+
+    {{#if user.birth}}
+      <p>Birth: {{user.birth}}</p>
+    {{/if}}
+
+    {{#if user.gender}}
+      <p>Gender: {{user.gender}}</p>
+    {{/if}}
+
+    {{#if user.nacionality}}
+      <p>Nacionality: {{user.nacionality}}</p>
+    {{/if}}
+
+    {{#if user.profession}}
+      <p>Profession: {{user.profession}}</p>
+    {{/if}}
+
+    {{#if user.contact}}
+      <p>Contact: {{user.contact}}</p>
+    {{/if}}
 
     <a href="/users/profile/update/{{user._id}}"><button class="btn btn-success">Update</button></a>
+    <a href="/users/profile/changep/{{user._id}}"><button class="btn btn-warning">Change Password</button></a>
+
+    <form action="/users/profile/delete/{{user._id}}" method="POST">
+      <button type="submit" class="btn btn-danger mt-4">Delete Account</button>
+    </form>
   </div>
 
 </div>

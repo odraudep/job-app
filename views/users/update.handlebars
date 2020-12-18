@@ -4,22 +4,34 @@
 
 <div class="card">
   <div class="card-body">
-    <h3>Register: </h3>
+    <h3>Update: </h3>
 
-    <form action="/users/register" method="POST">
-      <label for="name">Name: </label>
-      <input type="text" name="name" id="name" class="form-control" value="{{name}}">
+    <form action="/users/profile/update" method="POST">
+      <input type="hidden" name="id" value="{{user._id}}">
 
-      <label for="email" class="mt-2">E-mail: </label>
-      <input type="email" name="email" id="email" class="form-control" value="{{email}}">
+      <p>Name: {{user.name}}</p>
 
-      <label for="password" class="mt-2">Password: </label>
-      <input type="password" name="password" id="password" class="form-control" value="{{password}}">
+      <label for="birth">Birth: </label>
+      <input type="date" name="birth" id="birth" value="{{user.birth}}">
 
-      <label for="password2" class="mt-2">Repeat your password: </label>
-      <input type="password" name="password2" id="password2" class="form-control">
+      <p class="mt-2" style="margin-bottom: 0;">Gender: </p>
 
-      <button type="submit" class="btn btn-success mt-4">Sign Up</button>
+      <input type="radio" {{#if male}}checked{{/if}} name="gender" id="male" value="M">
+      <label for="male" >Male</label>
+
+      <input type="radio" {{#if female}}checked{{/if}} name="gender" id="female" value="F">
+      <label for="female">Female</label> <br>
+
+      <label for="nationality" class="mt-2">Nacionality: </label>
+      <input type="text" name="nacionality" id="nacionality" class="form-control" placeholder="Your nacionality..." value="{{user.nacionality}}">
+
+      <label for="profession" class="mt-2">Profession: </label>
+      <input type="text" name="profession" id="profession" class="form-control" placeholder="Your profession..." value="{{user.profession}}">
+
+      <label for="contact">Contact: </label>
+      <input type="text" name="contact" id="contact" class="form-control" placeholder="Your contact..." value="{{user.contact}}">
+
+      <button type="submit" class="btn btn-success mt-4">Update</button>
     </form>
   </div>
 </div>

@@ -85,7 +85,102 @@ router.get("/profile", (req, res) => {
 });
 
 router.get("/profile/update/:id", (req, res) => {
-  res.render("/users/update");
+  User.findOne({_id: req.params.id}).lean().then((user) => {
+    let male = false;
+    let female = false;
+    if (user.gender == "M") {
+      male = true
+    } else {
+      female = true
+    }
+    res.render("users/update", {user: user, male: male, female: female});
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/");
+  });
+});
+
+router.post("/profile/update", (req, res) => {
+  User.findOne({_id: req.body.id}).then((user) => {
+    user.birth = req.body.birth;
+    user.gender = req.body.gender;
+    user.nacionality = req.body.nacionality;
+    user.profession = req.body.profession;
+    user.contact = req.body.contact;
+
+    user.save().then(() => {
+      req.flash("success_msg", "You have been updated your profile");
+      res.redirect("/users/profile");
+    }).catch((err) => {
+      req.flash("error_msg", "That's an error to update your profile");
+      res.redirect("/users/profile");
+    });
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/users/profile");
+  });
+});
+
+router.get("/profile/changep/:id", (req, res) => {
+  User.findOne({_id: req.params.id}).then((user) => {
+    res.render("users/changepas");
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/users/profile");
+  });
+});
+
+router.post("/profile/changep/", (req, res) => {
+  const password = req.body.password;
+  const new_password = req.body.new_password;
+  const rep_password = req.body.rep_password;
+
+  let errors = [];
+
+  // Errors
+  // if (!password) {
+  //   errors.push({err_inf: "Type your password"});
+  // };
+  // if (!new_password) {
+  //   errors.push({err_inf: "Type a new password"});
+  // };
+  // if (!rep_password) {
+  //   errors.push({err_inf: "Repeat your password"});
+  // };
+  // if(new_password && rep_password && new_password != rep_password) {
+  //   errors.push({err_inf: "The passwords have to be the same"});
+  // };
+
+  // Check the errors
+  if (errors.length > 0) {
+    res.render("users/changepas", {errors: errors});
+  } else {
+    // const salt = bcrypt.genSaltSync(10);
+    // const hash = bcrypt.hashSync(new_password, salt);
+
+    User.findOne({_id: req.body.id}).then((user) => {
+      bcrypt.compare(new_password, user.password, (err, ok) => {
+        if (err) {
+          req.flash("error_msg", "Password incorrect");
+          res.redirect("/users/profile");
+        } else {
+          user.password = new_password;
+
+          user.save().then(() => {
+            req.flash("success_msg", "Password has been changed");
+            req.logOut();
+            res.redirect("/users/login");
+          }).catch((err) => {
+            req.flash("error_msg", "That's an error to save the alterations");
+            res.redirect("/users/profile");
+          });
+        };
+      });
+    }).catch((err) => {
+      req.flash("error_msg", "That's an error");
+      res.redirect("/users/profile");
+    });
+  }
 });
 
 module.exports = router;

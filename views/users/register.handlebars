@@ -8,16 +8,16 @@
 
     <form action="/users/register" method="POST">
       <label for="name">Name: </label>
-      <input type="text" name="name" id="name" class="form-control" value="{{name}}">
+      <input type="text" name="name" id="name" class="form-control" placeholder="Your name..." value="{{name}}">
 
       <label for="email" class="mt-2">E-mail: </label>
-      <input type="email" name="email" id="email" class="form-control" value="{{email}}">
+      <input type="email" name="email" id="email" class="form-control" placeholder="Your e-mail..." value="{{email}}">
 
       <label for="password" class="mt-2">Password: </label>
-      <input type="password" name="password" id="password" class="form-control" value="{{password}}">
+      <input type="password" name="password" id="password" class="form-control" placeholder="Your password..." value="{{password}}">
 
       <label for="password2" class="mt-2">Repeat your password: </label>
-      <input type="password" name="password2" id="password2" class="form-control">
+      <input type="password" name="password2" id="password2" class="form-control" placeholder="Repeat your password...">
 
       <button type="submit" class="btn btn-success mt-4">Sign Up</button>
     </form>
