@@ -22,6 +22,16 @@ const User = new Schema({
   password: {
     type: String,
     required: true
+  },
+  // Secundary
+  birth: {
+    type: Date
+  },
+  gender: {
+    type: String
+  },
+  profession: {
+    type: String
   }
 });
 

@@ -75,4 +75,17 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
+router.get("/profile", (req, res) => {
+  User.findOne(req.user).lean().then((user) => {
+    res.render("users/profile", {user: user});
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/");
+  });
+});
+
+router.get("/profile/update/:id", (req, res) => {
+  res.render("/users/update");
+});
+
 module.exports = router;

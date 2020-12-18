@@ -19,8 +19,13 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/test", (req, res) => {
-  res.send((req.user).name);
+router.get("/hire", (req, res) => {
+  User.find().lean().then((users) => {
+    res.render("hire", {users: users});
+  }).catch((err) => {
+    req.flash("error_msg", "That's an error");
+    res.redirect("/");
+  });
 });
 
 module.exports = router;

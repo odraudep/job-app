@@ -23,7 +23,7 @@ router.post("/user/delete/:id", (req, res) => {
   });
 });
 
-router.get("/user/admin/:id", (req, res) => {
+router.get("/user/admin/:id", isAdmin, (req, res) => {
   User.findOne({_id: req.params.id}).then((user) => {
     user.isAdm = 1;
 
@@ -43,7 +43,7 @@ router.get("/user/admin/:id", (req, res) => {
   });
 });
 
-router.get("/user/noadmin/:id", (req, res) => {
+router.get("/user/noadmin/:id", isAdmin, (req, res) => {
   User.findOne({_id: req.params.id}).then((user) => {
     user.isAdm = 0;
 
