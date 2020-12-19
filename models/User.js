@@ -13,7 +13,7 @@ const User = new Schema({
   },
   isAdm: {
     type: String,
-    default: 0
+    default: 1
   },
   name: {
     type: String,
@@ -24,6 +24,9 @@ const User = new Schema({
     required: true
   },
   // Secundary
+  beHired: {
+    type: String
+  },
   birth: {
     type: String
   },

@@ -86,8 +86,8 @@ router.get("/profile", (req, res) => {
 
 router.get("/profile/update/:id", (req, res) => {
   User.findOne({_id: req.params.id}).lean().then((user) => {
-    let male = false;
-    let female = false;
+    let male;
+    let female;
     if (user.gender == "M") {
       male = true
     } else {
@@ -185,6 +185,25 @@ router.post("/profile/changep/", (req, res) => {
       res.redirect("/users/profile");
     });
   }
+});
+
+router.post("/profile/delete/:id", (req, res) => {
+  res.render("users/delete", {id: req.params.id});
+});
+
+router.post("/profile/delete", (req, res) => {
+  if (req.body.txt == "I want to delete my account") {
+    User.findOneAndDelete({_id: req.body.id}).then(() => {
+      req.flash("success_msg", "You have been deleted your account");
+      res.redirect("/");
+    }).catch((err) => {
+      req.flash("error_msg", "Error to delete your account");
+      res.redirect("/");
+    });
+  } else {
+    req.flash("error_msg", "Type exactly what the message shows to you to type");
+    res.redirect("/users/profile");
+  };
 });
 
 module.exports = router;

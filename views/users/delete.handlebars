@@ -1,0 +1,12 @@
+<div class="alert alert-primary">
+  Type:
+  <span style="font-weight: bold;">I want to delete my account</span>
+</div>
+
+<form action="/users/profile/delete" method="POST">
+  <input type="hidden" name="id" value="{{id}}">
+
+  <input type="text" name="txt" class="form-control">
+
+  <button type="submit" class="btn btn-danger mt-4" style="display: block; margin: auto;">Delete</button>
+</form>

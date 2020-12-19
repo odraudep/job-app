@@ -26,6 +26,10 @@
       <p>Contact: {{user.contact}}</p>
     {{/if}}
 
+    {{#if user.beHired}}
+      <p>Be Hired: {{user.beHired}}</p>
+    {{/if}}
+
     <a href="/users/profile/update/{{user._id}}"><button class="btn btn-success">Update</button></a>
     <a href="/users/profile/changep/{{user._id}}"><button class="btn btn-warning">Change Password</button></a>
 
