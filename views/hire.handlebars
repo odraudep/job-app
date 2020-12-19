@@ -1,14 +1,16 @@
 <h3>Hire someone</h3>
 
+<a href="hire/filter"><button class="btn btn-secondary">Filter By</button></a>
+
 <h5>Latest workers registered: </h5>
 
-<div class="card card-body">
-  {{#each users}}
-    <p>Name: {{name}}</p>
-    <p>Nacionality: {{nacionality}}</p>
-    <p>Profession: {{profession}}</p>
-    <p>Contact: {{contact}}</p>
-
-    <hr>
-  {{/each}}
-</div>
+{{#each users}}
+  <div class="card mt-4">
+    <div class="card-body">
+        <p>Name: {{name}}</p>
+        <p>Nacionality: {{nacionality}}</p>
+        <p>Profession: {{profession}}</p>
+        <p>Contact: {{contact}}</p>
+    </div>
+  </div>
+{{/each}}

@@ -20,12 +20,16 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/hire", (req, res) => {
-  User.find({beHired: 1}).lean().then((users) => {
+  User.find({beHired: 1}).sort({date: "desc"}).lean().then((users) => {
     res.render("hire", {users: users});
   }).catch((err) => {
     req.flash("error_msg", "That's an error");
     res.redirect("/");
   });
+});
+
+router.get("/hire/filter", (req, res) => {
+  res.render("filter");
 });
 
 router.get("/behired", (req, res) => {
