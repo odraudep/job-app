@@ -109,7 +109,7 @@ router.post("/profile/update", (req, res) => {
     user.contact = req.body.contact;
 
     user.save().then(() => {
-      req.flash("success_msg", "You have been updated your profile");
+      req.flash("success_msg", "You have updated your profile");
       res.redirect("/users/profile");
     }).catch((err) => {
       req.flash("error_msg", "That's an error to update your profile");
@@ -194,7 +194,7 @@ router.post("/profile/delete/:id", (req, res) => {
 router.post("/profile/delete", (req, res) => {
   if (req.body.txt == "I want to delete my account") {
     User.findOneAndDelete({_id: req.body.id}).then(() => {
-      req.flash("success_msg", "You have been deleted your account");
+      req.flash("success_msg", "Your account has been deleted");
       res.redirect("/");
     }).catch((err) => {
       req.flash("error_msg", "Error to delete your account");
